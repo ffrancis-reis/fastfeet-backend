@@ -16,6 +16,8 @@ classe App com express, middlewares e routes, exportando o server
 server com o app escutando na porta 3333
 rotas, exportando
 ==================================================
+docker run --name database -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres:11
+==================================================
 src/config/database.js
 src/database/migrations
 src/app/controllers
@@ -27,7 +29,14 @@ criar migration da tabela
 criar classe model da entidade da tabela
 classe Database que cria instância e conexão com o banco, importar no App
 criar classe controller, importar nas rotas
-
+==================================================
+yarn sequelize migration:create --name=create-users
+yarn sequelize db:migrate
+yarn sequelize seed:generate --name admin-user
+yarn sequelize db:seed:all
+==================================================
+yarn add bcryptjs
+==================================================
 src/config/auth.js
 app/middlewares/auth.js
 

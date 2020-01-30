@@ -12,9 +12,9 @@ src/app.js
 src/server.js
 src/routes.js
 
-classe App com express, middlewares e routes, exportando o server
-server com o app escutando na porta 3333
-rotas, exportando
+criar classe App com express, middlewares e routes, exportando o server
+criar server com o app escutando na porta 3333
+criar rotas, exportando
 ==================================================
 docker run --name database -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres:11
 ==================================================
@@ -27,7 +27,7 @@ src/database/index.js
 dados de conexão com o banco de dados, relacional postgres
 criar migration da tabela
 criar classe model da entidade da tabela
-classe Database que cria instância e conexão com o banco, importar no App
+criar classe Database que cria instância e conexão com o banco, importar no App
 criar classe controller, importar nas rotas
 ==================================================
 yarn sequelize migration:create --name=create-users
@@ -35,7 +35,11 @@ yarn sequelize db:migrate
 yarn sequelize seed:generate --name admin-user
 yarn sequelize db:seed:all
 ==================================================
-yarn add bcryptjs
+yarn add bcryptjs jsonwebtoken yup
+https://www.md5online.org/
+==================================================
+src/app/models/User.js
+src/app/controllers/SessionController.js
 ==================================================
 src/config/auth.js
 app/middlewares/auth.js

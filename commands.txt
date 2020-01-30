@@ -1,0 +1,35 @@
+yarn add sucrase nodemon eslint prettier eslint-config-prettier eslint-plugin-prettier sequelize-cli -D
+
+yarn add express sequelize pg pg-hstore
+
+yarn eslint --init
+
+copiar arquivos de devDependencies
+
+yarn eslint --fix src --ext .js
+==================================================
+src/app.js
+src/server.js
+src/routes.js
+
+classe App com express, middlewares e routes, exportando o server
+server com o app escutando na porta 3333
+rotas, exportando
+==================================================
+src/config/database.js
+src/database/migrations
+src/app/controllers
+src/app/models
+src/database/index.js
+
+dados de conexão com o banco de dados, relacional postgres
+criar migration da tabela
+criar classe model da entidade da tabela
+classe Database que cria instância e conexão com o banco, importar no App
+criar classe controller, importar nas rotas
+
+src/config/auth.js
+app/middlewares/auth.js
+
+dados de autentição do usuário
+exportar função de middleware

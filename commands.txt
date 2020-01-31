@@ -44,7 +44,7 @@ yarn sequelize migration:create --name=create-recipients
 yarn sequelize migration:create --name=create-deliveryMen
 yarn sequelize migration:create --name=create-packages
 ==================================================
-yarn add bcryptjs jsonwebtoken yup
+yarn add bcryptjs jsonwebtoken yup date-fns
 https://www.md5online.org/
 ==================================================
 src/app/models/User.js

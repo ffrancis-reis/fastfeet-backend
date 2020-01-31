@@ -41,6 +41,8 @@ yarn sequelize db:migrate
 yarn sequelize seed:generate --name admin-user
 yarn sequelize db:seed:all
 yarn sequelize migration:create --name=create-recipients
+yarn sequelize migration:create --name=create-deliveryMen
+yarn sequelize migration:create --name=create-packages
 ==================================================
 yarn add bcryptjs jsonwebtoken yup
 https://www.md5online.org/
@@ -50,3 +52,5 @@ src/app/controllers/SessionController.js
 
 src/app/models/Recipient.js
 src/app/controllers/RecipientController.js
+src/app/models/DeliveryMan.js
+src/app/controllers/DeliveryManController.js

@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import { format, parseISO } from 'date-fns';
 import Package from '../models/Package';
 import DeliveryProblem from '../models/DeliveryProblem';
 import DeliveryMan from '../models/DeliveryMan';
@@ -109,10 +110,20 @@ class DeliveryProblemController {
 
       const deliveryman = await DeliveryMan.findByPk(packageObj.deliveryman_id);
 
+      const formattedDate = format(
+        parseISO(canceled_at),
+        "'day' dd 'of' MMMM', at' h:mm'h'"
+      );
+
       await Mail.sendMail({
         to: `${deliveryman.name} <${deliveryman.email}>`,
         subject: 'canceled package',
-        text: 'sample email body',
+        template: 'cancellation',
+        context: {
+          deliveryman: deliveryman.name,
+          package: packageObj.product,
+          cancelation: formattedDate,
+        },
       });
     }
 

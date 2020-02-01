@@ -3,6 +3,7 @@ import Package from '../models/Package';
 import Recipient from '../models/Recipient';
 import DeliveryMan from '../models/DeliveryMan';
 import File from '../models/File';
+import Notification from '../schemas/Notification';
 
 class PackageController {
   async store(req, res) {
@@ -43,6 +44,13 @@ class PackageController {
       deliveryman_id,
       signature_id,
     });
+
+    if (deliveryMan) {
+      await Notification.create({
+        content: `there is a new package: "${product}" for you to be delivered`,
+        user: deliveryman_id,
+      });
+    }
 
     return res.json(packageObj);
   }
@@ -97,7 +105,7 @@ class PackageController {
       return res.status(401).json({ error: 'package does not exists' });
     }
 
-    const { recipient_id, deliveryman_id } = req.body;
+    const { recipient_id, deliveryman_id, canceled_at } = req.body;
 
     const recipientExists = await Recipient.findByPk(recipient_id);
 
@@ -112,6 +120,13 @@ class PackageController {
     }
 
     await packageObj.update(req.body);
+
+    if (canceled_at) {
+      await Notification.create({
+        content: `the package: "${packageObj.product}" has been canceled`,
+        user: packageObj.deliveryman_id,
+      });
+    }
 
     return res.json(packageObj);
   }

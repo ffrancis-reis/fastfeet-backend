@@ -1,6 +1,7 @@
 import * as Yup from 'yup';
 import Package from '../models/Package';
 import DeliveryProblem from '../models/DeliveryProblem';
+import Notification from '../schemas/Notification';
 
 class DeliveryProblemController {
   async indexAll(req, res) {
@@ -97,6 +98,13 @@ class DeliveryProblemController {
     packageObj.canceled_at = canceled_at;
 
     packageObj.save();
+
+    if (packageObj.deliveryman_id) {
+      await Notification.create({
+        content: `the package: "${packageObj.product}" has been canceled`,
+        user: packageObj.deliveryman_id,
+      });
+    }
 
     return res.json(packageObj);
   }

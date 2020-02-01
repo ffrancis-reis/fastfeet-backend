@@ -51,8 +51,10 @@ yarn sequelize migration:create --name=add-avatar-to-deliveryMen2
 yarn sequelize migration:create --name=add-signature-to-packages2
 yarn sequelize migration:create --name=create-delivery-problems
 ==================================================
-yarn add bcryptjs jsonwebtoken yup date-fns@next multer mongoose
+yarn add bcryptjs jsonwebtoken yup date-fns@next multer mongoose nodemailer
 https://www.md5online.org/
+https://cloud.mongodb.com/user?nds=true#/atlas/login
+https://mailtrap.io/inboxes
 ==================================================
 src/app/models/User.js
 src/app/controllers/SessionController.js
@@ -76,3 +78,5 @@ src/app/controllers/DeliveryProblemController.js
 
 src/app/schemas/Notification.js
 src/app/controllers/NotificationController.js
+src/config/mail.js
+src/lib/Mail.js

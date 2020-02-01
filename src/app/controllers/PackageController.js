@@ -1,9 +1,11 @@
 import * as Yup from 'yup';
+import { format, parseISO } from 'date-fns';
 import Package from '../models/Package';
 import Recipient from '../models/Recipient';
 import DeliveryMan from '../models/DeliveryMan';
 import File from '../models/File';
 import Notification from '../schemas/Notification';
+import Mail from '../../lib/Mail';
 
 class PackageController {
   async store(req, res) {
@@ -49,6 +51,16 @@ class PackageController {
       await Notification.create({
         content: `there is a new package: "${product}" for you to be delivered`,
         user: deliveryman_id,
+      });
+
+      await Mail.sendMail({
+        to: `${deliveryMan.name} <${deliveryMan.email}>`,
+        subject: 'new package',
+        template: 'newPackage',
+        context: {
+          deliveryman: deliveryMan.name,
+          package: packageObj.product,
+        },
       });
     }
 
@@ -125,6 +137,22 @@ class PackageController {
       await Notification.create({
         content: `the package: "${packageObj.product}" has been canceled`,
         user: packageObj.deliveryman_id,
+      });
+
+      const formattedDate = format(
+        parseISO(canceled_at),
+        "'day' dd 'of' MMMM', at' hh:mm'h'"
+      );
+
+      await Mail.sendMail({
+        to: `${deliveryManExists.name} <${deliveryManExists.email}>`,
+        subject: 'canceled package',
+        template: 'cancellation',
+        context: {
+          deliveryman: deliveryManExists.name,
+          package: packageObj.product,
+          cancelation: formattedDate,
+        },
       });
     }
 

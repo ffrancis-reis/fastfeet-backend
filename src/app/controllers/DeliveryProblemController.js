@@ -112,7 +112,7 @@ class DeliveryProblemController {
 
       const formattedDate = format(
         parseISO(canceled_at),
-        "'day' dd 'of' MMMM', at' h:mm'h'"
+        "'day' dd 'of' MMMM', at' hh:mm'h'"
       );
 
       await Mail.sendMail({

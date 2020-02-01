@@ -4,7 +4,6 @@ class Package extends Model {
   static init(sequelize) {
     super.init(
       {
-        signature_id: Sequelize.STRING,
         product: Sequelize.STRING,
         canceled_at: Sequelize.DATE,
         start_date: Sequelize.DATE,
@@ -26,6 +25,10 @@ class Package extends Model {
     this.belongsTo(models.DeliveryMan, {
       foreignKey: 'deliveryman_id',
       as: 'delivery_man',
+    });
+    this.belongsTo(models.File, {
+      foreignKey: 'signature_id',
+      as: 'signature',
     });
   }
 }

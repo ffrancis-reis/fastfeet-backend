@@ -1,7 +1,9 @@
 import * as Yup from 'yup';
 import Package from '../models/Package';
 import DeliveryProblem from '../models/DeliveryProblem';
+import DeliveryMan from '../models/DeliveryMan';
 import Notification from '../schemas/Notification';
+import Mail from '../../lib/Mail';
 
 class DeliveryProblemController {
   async indexAll(req, res) {
@@ -103,6 +105,14 @@ class DeliveryProblemController {
       await Notification.create({
         content: `the package: "${packageObj.product}" has been canceled`,
         user: packageObj.deliveryman_id,
+      });
+
+      const deliveryman = await DeliveryMan.findByPk(packageObj.deliveryman_id);
+
+      await Mail.sendMail({
+        to: `${deliveryman.name} <${deliveryman.email}>`,
+        subject: 'canceled package',
+        text: 'sample email body',
       });
     }
 

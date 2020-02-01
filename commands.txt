@@ -74,3 +74,5 @@ src/app/controllers/FileController.js
 src/app/models/DeliveryProblem.js
 src/app/controllers/DeliveryProblemController.js
 
+src/app/schemas/Notification.js
+src/app/controllers/NotificationController.js

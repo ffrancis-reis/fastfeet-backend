@@ -8,6 +8,7 @@ import PackageController from './app/controllers/PackageController';
 import DeliveryController from './app/controllers/DeliveryController';
 import FileController from './app/controllers/FileController';
 import DeliveryProblemController from './app/controllers/DeliveryProblemController';
+import NotificationController from './app/controllers/NotificationController';
 import authMiddleware from './app/middlewares/auth';
 
 const routes = new Router();
@@ -40,10 +41,12 @@ routes.post('/files', upload.single('file'), FileController.store);
 routes.get('/recipients', RecipientController.index);
 routes.get('/deliverymen', DeliveryManController.index);
 routes.get('/packages', PackageController.index);
+routes.get('/notifications', NotificationController.index);
 
 routes.put('/recipients/:id', RecipientController.update);
 routes.put('/deliverymen/:id', DeliveryManController.update);
 routes.put('/packages/:id', PackageController.update);
+routes.put('/notifications/:id', NotificationController.update);
 
 routes.delete('/recipients/:id', RecipientController.delete);
 routes.delete('/deliverymen/:id', DeliveryManController.delete);

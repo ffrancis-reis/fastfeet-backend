@@ -22,24 +22,13 @@ class RecipientController {
       return res.status(401).json({ error: 'recipient already exists' });
     }
 
-    const { id, complement, state, city, zipcode } = await Recipient.create({
+    const recipient = await Recipient.create({
       name,
       street,
       number,
     });
 
-    return res.json({
-      user: {
-        id,
-        name,
-        street,
-        number,
-        complement,
-        state,
-        city,
-        zipcode,
-      },
-    });
+    return res.json(recipient);
   }
 
   async index(req, res) {
@@ -72,17 +61,9 @@ class RecipientController {
       return res.status(401).json({ error: 'recipient does not exists' });
     }
 
-    const {
-      name,
-      street,
-      number,
-      complement,
-      state,
-      city,
-      zipcode,
-    } = await recipient.update(req.body);
+    await recipient.update(req.body);
 
-    return res.json({ name, street, number, complement, state, city, zipcode });
+    return res.json(recipient);
   }
 
   async delete(req, res) {

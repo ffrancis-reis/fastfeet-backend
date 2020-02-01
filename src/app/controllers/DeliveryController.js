@@ -4,10 +4,10 @@ import Package from '../models/Package';
 
 class DeliveryController {
   async index(req, res) {
-    const { id } = req.params;
+    const { deliveryman_id } = req.params;
 
     const deliveries = await Package.findAll({
-      where: { deliveryman_id: id },
+      where: { deliveryman_id },
       attributes: [
         'id',
         'product',
@@ -22,11 +22,11 @@ class DeliveryController {
     return res.json(deliveries);
   }
 
-  async getNewPackages(req, res) {
-    const { id } = req.params;
+  async indexNewPackages(req, res) {
+    const { deliveryman_id } = req.params;
 
     const deliveries = await Package.findAll({
-      where: { deliveryman_id: id, end_date: null, canceled_at: null },
+      where: { deliveryman_id, end_date: null, canceled_at: null },
       attributes: [
         'id',
         'product',
@@ -59,7 +59,7 @@ class DeliveryController {
     }
 
     const { start_date } = req.body;
-    const hours = getHours(parseISO(start_date) - 1);
+    const hours = getHours(parseISO(start_date) - 1); // horário de verão será?
     const minutes = getMinutes(parseISO(start_date));
 
     if (hours < 8 || hours > 18 || (hours === 18 && minutes > 0)) {
@@ -68,24 +68,9 @@ class DeliveryController {
         .json({ error: 'start date is not between 08:00h and 18:00h' });
     }
 
-    const {
-      product,
-      recipient_id,
-      deliveryman_id,
-      signature_id,
-      canceled_at,
-      end_date,
-    } = await packageObj.update(req.body);
+    await packageObj.update(req.body);
 
-    return res.json({
-      product,
-      recipient_id,
-      deliveryman_id,
-      signature_id,
-      canceled_at,
-      start_date,
-      end_date,
-    });
+    return res.json(packageObj);
   }
 }
 

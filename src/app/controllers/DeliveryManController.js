@@ -35,7 +35,7 @@ class DeliveryManController {
 
   async index(req, res) {
     const deliveryMen = await DeliveryMan.findAll({
-      attributes: ['id', 'name', 'email'],
+      attributes: ['id', 'name', 'email', 'avatar_id'],
       order: ['name'],
     });
 
@@ -69,9 +69,9 @@ class DeliveryManController {
         .json({ error: 'delivery man already exists with this email' });
     }
 
-    const { name, avatar_id } = await deliveryMan.update(req.body);
+    await deliveryMan.update(req.body);
 
-    return res.json({ name, avatar_id, email });
+    return res.json(deliveryMan);
   }
 
   async delete(req, res) {

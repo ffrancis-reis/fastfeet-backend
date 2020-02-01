@@ -1,11 +1,12 @@
 import * as Yup from 'yup';
 import DeliveryMan from '../models/DeliveryMan';
+import File from '../models/File';
 
 class DeliveryManController {
   async store(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
-      avatar_id: Yup.string(),
+      avatar_id: Yup.number(),
       email: Yup.string()
         .email()
         .required(),
@@ -36,6 +37,13 @@ class DeliveryManController {
   async index(req, res) {
     const deliveryMen = await DeliveryMan.findAll({
       attributes: ['id', 'name', 'email', 'avatar_id'],
+      include: [
+        {
+          model: File,
+          as: 'avatar',
+          attributes: ['name', 'path', 'url'],
+        },
+      ],
       order: ['name'],
     });
 
@@ -45,7 +53,7 @@ class DeliveryManController {
   async update(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string(),
-      avatar_id: Yup.string(),
+      avatar_id: Yup.number(),
       email: Yup.string().email(),
     });
 

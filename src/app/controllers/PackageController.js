@@ -8,9 +8,9 @@ class PackageController {
   async store(req, res) {
     const schema = Yup.object().shape({
       product: Yup.string().required(),
-      recipient_id: Yup.string(),
-      deliveryman_id: Yup.string(),
-      signature_id: Yup.string(),
+      recipient_id: Yup.number(),
+      deliveryman_id: Yup.number(),
+      signature_id: Yup.number(),
     });
 
     if (!(await schema.isValid(req.body))) {
@@ -79,9 +79,9 @@ class PackageController {
   async update(req, res) {
     const schema = Yup.object().shape({
       product: Yup.string(),
-      recipient_id: Yup.string(),
-      deliveryman_id: Yup.string(),
-      signature_id: Yup.string(),
+      recipient_id: Yup.number(),
+      deliveryman_id: Yup.number(),
+      signature_id: Yup.number(),
       canceled_at: Yup.date(),
       start_date: Yup.date(),
       end_date: Yup.date(),

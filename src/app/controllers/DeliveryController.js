@@ -43,7 +43,7 @@ class DeliveryController {
 
   async update(req, res) {
     const schema = Yup.object().shape({
-      signature_id: Yup.string(),
+      signature_id: Yup.number(),
       start_date: Yup.date(),
       end_date: Yup.date(),
     });
